@@ -3,12 +3,14 @@ package com.gojek.weatherapp.ui;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
+import javax.inject.Inject;
+
 import io.reactivex.annotations.NonNull;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private Repository repository;
 
-
+    @Inject
     public ViewModelFactory(Repository repository) {
         this.repository = repository;
     }
