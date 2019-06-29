@@ -4,4 +4,7 @@
     <dimen name="margin_10dp">10dp</dimen>
     <dimen name="margin_16dp">16dp</dimen>
     <dimen name="fontsize_16sp">16sp</dimen>
+    <dimen name="fontsize_96sp">96sp</dimen>
+    <dimen name="fontsize_36sp">36sp</dimen>
+    <dimen name="margin_52dp">52dp</dimen>
 </resources>

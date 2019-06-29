@@ -3,11 +3,15 @@ package com.gojek.weatherapp.ui;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.gojek.weatherapp.R;
 import com.gojek.weatherapp.WeatherApplication;
+import com.gojek.weatherapp.helper.WeatherHelperClass;
 import com.gojek.weatherapp.model.ApiResponse;
+import com.gojek.weatherapp.model.WeatherResponse;
 
 import javax.inject.Inject;
 
@@ -39,6 +43,7 @@ public class WeatherActivity extends AppCompatActivity {
                 break;
 
             case SUCCESS:
+                renderUI(apiResponse.data);
                 Toast.makeText(WeatherActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 break;
 
@@ -49,5 +54,16 @@ public class WeatherActivity extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    private void renderUI(WeatherResponse data) {
+        WeatherHelperClass weatherHelperClass = new WeatherHelperClass();
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setAutoMeasureEnabled(true);
+        ForcastDisplayAdapter adapter = new ForcastDisplayAdapter(this, weatherHelperClass.processWeatherResponse(data));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
     }
 }
