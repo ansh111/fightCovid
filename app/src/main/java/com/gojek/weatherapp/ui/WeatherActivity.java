@@ -21,7 +21,7 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_coordiantor_layout);
         ((WeatherApplication) getApplication()).getAppComponent().doInjection(this);
         weatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(WeatherViewModel.class);
         weatherViewModel.forcastResponse().observe(this, this::consumeResponse);

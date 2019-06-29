@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_f5f6f7"
     tools:context=".ui.WeatherActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <ProgressBar
+        android:layout_width="@dimen/margin_96dp"
+        android:layout_height="@dimen/margin_96dp"
+        android:indeterminateDrawable="@drawable/rotate_progress_bar"
+        android:padding="@dimen/margin_10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
