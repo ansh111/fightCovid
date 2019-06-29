@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/data_one"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:lineSpacingExtra="19dp"
         android:textColor="@color/black_2a2a2a"
         android:textSize="@dimen/fontsize_16sp"
+        android:gravity="center_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="data 1" />
@@ -19,15 +20,21 @@
     <TextView
 
         android:id="@+id/data_two"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
         android:layout_gravity="center"
         android:lineSpacingExtra="19dp"
         android:textColor="@color/black_2a2a2a"
         android:textSize="@dimen/fontsize_16sp"
-        android:gravity="end"
-        app:layout_constraintStart_toEndOf="@id/data_one"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="date 2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_f5f6f7"
+        app:layout_constraintTop_toBottomOf="@id/data_one"></View>
 
 </android.support.constraint.ConstraintLayout>

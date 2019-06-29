@@ -3,4 +3,5 @@
     <string name="errorString">Something went wrong</string>
     <string name="loading">loading</string>
     <string name="success">Success response</string>
+    <string name="retry">Retry</string>
 </resources>

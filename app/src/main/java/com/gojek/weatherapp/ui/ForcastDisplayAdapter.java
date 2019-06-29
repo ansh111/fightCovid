@@ -43,8 +43,8 @@ public class ForcastDisplayAdapter extends RecyclerView.Adapter<ForcastDisplayAd
 
     static class ApplicationViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dataOne;
-        TextView dataTwo;
+        private TextView dataOne;
+        private TextView dataTwo;
 
         public ApplicationViewHolder(Context context) {
             this(LayoutInflater.from(context).inflate(R.layout.forcast_item, null));
