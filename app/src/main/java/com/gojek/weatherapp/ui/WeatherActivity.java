@@ -152,7 +152,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             public boolean canScrollVertically() {
                 return false;
             }
-        };a
+        };
         linearLayoutManager.setAutoMeasureEnabled(true);
         ForcastDisplayAdapter adapter = new ForcastDisplayAdapter(this, weatherHelperClass.processWeatherResponse(data));
         recyclerView.setLayoutManager(linearLayoutManager);
