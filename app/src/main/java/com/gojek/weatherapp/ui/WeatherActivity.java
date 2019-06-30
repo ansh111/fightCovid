@@ -51,6 +51,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     private Button tempErrBtn;
     private View mLayout;
     private String mCachedCity;
+    private boolean isApiCalledOnce;
 
 
     @Override
@@ -81,7 +82,9 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         switch (apiResponse.status) {
 
             case LOADING:
-                progressBar.setVisibility(View.VISIBLE);
+                showViewsForLoading();
+
+
                 break;
 
             case SUCCESS:
@@ -97,12 +100,21 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void showViewsForLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+        tempErrBtn.setVisibility(View.GONE);
+        tempErr.setVisibility(View.GONE);
+        mLayout.setBackgroundColor(getResources().getColor(R.color.grey_f5f6f7));
+    }
+
     private void showViewsForFailure() {
         progressBar.setVisibility(View.GONE);
         tempErr.setVisibility(View.VISIBLE);
         tempVal.setVisibility(View.GONE);
         tempCity.setVisibility(View.GONE);
+        tempErrBtn.setVisibility(View.VISIBLE);
         tempErrBtn.setOnClickListener(this);
+        mLayout.setBackgroundColor(getResources().getColor(R.color.red_e85959));
     }
 
     private void showViewsForSuccess(WeatherResponse data) {
@@ -135,7 +147,12 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         });
 
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };a
         linearLayoutManager.setAutoMeasureEnabled(true);
         ForcastDisplayAdapter adapter = new ForcastDisplayAdapter(this, weatherHelperClass.processWeatherResponse(data));
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -153,8 +170,12 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            mCachedCity = addresses.get(0).getLocality();
-            callWeatherApi(addresses.get(0).getLocality());
+            if (addresses != null && !addresses.isEmpty() && !isApiCalledOnce) {
+                mCachedCity = addresses.get(0).getLocality();
+                callWeatherApi(addresses.get(0).getLocality());
+                isApiCalledOnce = true;
+
+            }
         }
 
         @Override
@@ -210,7 +231,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
                 @Override
                 public void onClick(View view) {
                     ActivityCompat.requestPermissions(WeatherActivity.this,
-                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                             PERMISSION_REQUEST_LOCATION);
                 }
             }).show();
@@ -218,7 +239,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         } else {
             Snackbar.make(mLayout, R.string.location_unavailable, Snackbar.LENGTH_SHORT).show();
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_LOCATION);
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_LOCATION);
         }
     }
 
@@ -238,7 +259,6 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
 
     }
-
 
 
 }

@@ -25,7 +25,7 @@ public class ForcastDisplayAdapter extends RecyclerView.Adapter<ForcastDisplayAd
 
     @Override
     public ApplicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ApplicationViewHolder(parent.getContext());
+        return new ApplicationViewHolder(parent.getContext(),parent);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ForcastDisplayAdapter extends RecyclerView.Adapter<ForcastDisplayAd
         private TextView dataOne;
         private TextView dataTwo;
 
-        public ApplicationViewHolder(Context context) {
-            this(LayoutInflater.from(context).inflate(R.layout.forcast_item, null));
+        public ApplicationViewHolder(Context context, ViewGroup parent) {
+            this(LayoutInflater.from(context).inflate(R.layout.forcast_item, parent,false));
         }
 
         private ApplicationViewHolder(View itemView) {

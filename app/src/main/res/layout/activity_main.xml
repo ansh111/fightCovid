@@ -52,7 +52,9 @@
         android:lineSpacingExtra="@dimen/margin_52dp"
         android:textSize="@dimen/fontsize_54sp"
         android:visibility="gone"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/error_txt"
         tools:text="Something went wrong at our end" />
 
     <Button
