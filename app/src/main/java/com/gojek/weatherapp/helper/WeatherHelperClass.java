@@ -18,7 +18,7 @@ public class WeatherHelperClass {
         for (Forecastday forecastday : weatherResponse.getForecast().getForecastday()) {
             ModifiedWeatherResponse modifiedWeatherResponse = new ModifiedWeatherResponse();
             modifiedWeatherResponse.setDay(weekDaysMap.get(getDayFromDate(forecastday.getDate())));
-            modifiedWeatherResponse.setTemperature(String.valueOf(forecastday.getDay().getAvgtempC()));
+            modifiedWeatherResponse.setTemperature(String.format("%s C", String.valueOf(Math.round(forecastday.getDay().getAvgtempC()))));
             modifiedWeatherResponseList.add(modifiedWeatherResponse);
         }
         return modifiedWeatherResponseList;

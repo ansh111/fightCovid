@@ -27,6 +27,7 @@
         android:layout_marginBottom="62dp"
         android:gravity="center"
         android:textSize="@dimen/fontsize_96sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="20" />
@@ -38,6 +39,7 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/margin_52dp"
         android:textSize="@dimen/fontsize_36sp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/temperature_val"
         tools:text="bangalore" />
 
@@ -49,10 +51,12 @@
         android:gravity="center"
         android:lineSpacingExtra="@dimen/margin_52dp"
         android:textSize="@dimen/fontsize_54sp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Something went wrong at our end" />
 
     <Button
+        android:id="@+id/temperature_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_44dp"
@@ -61,6 +65,7 @@
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

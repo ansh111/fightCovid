@@ -9,30 +9,35 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gojek.weatherapp.R;
 import com.gojek.weatherapp.WeatherApplication;
 import com.gojek.weatherapp.helper.WeatherHelperClass;
 import com.gojek.weatherapp.model.ApiResponse;
 import com.gojek.weatherapp.model.WeatherResponse;
+import com.gojek.weatherapp.utils.WeatherUtility;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
-import static java.util.Locale.*;
+import static com.gojek.weatherapp.utils.WeatherConstants.API_KEY;
+import static com.gojek.weatherapp.utils.WeatherConstants.PERMISSION_REQUEST_LOCATION;
+import static java.util.Locale.getDefault;
 
-public class WeatherActivity extends AppCompatActivity implements View.OnClickListener {
+public class WeatherActivity extends AppCompatActivity implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
 
     @Inject
@@ -40,6 +45,13 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     WeatherViewModel weatherViewModel;
     private ProgressBar progressBar;
     private LocationManager mLocationManager;
+    private TextView tempVal;
+    private TextView tempCity;
+    private TextView tempErr;
+    private Button tempErrBtn;
+    private View mLayout;
+    private String mCachedCity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +59,21 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_coordiantor_layout);
         ((WeatherApplication) getApplication()).getAppComponent().doInjection(this);
         progressBar = findViewById(R.id.progressBar);
+        tempVal = findViewById(R.id.temperature_val);
+        tempCity = findViewById(R.id.temperature_city);
+        tempErr = findViewById(R.id.temperature_error);
+        tempErrBtn = findViewById(R.id.temperature_retry);
+        mLayout = findViewById(R.id.parent_layout);
+
         weatherViewModel = ViewModelProviders.of(this, viewModelFactory).get(WeatherViewModel.class);
-        weatherViewModel.forcastResponse().observe(this, this::consumeResponse);
-        weatherViewModel.loadForcast("69e792543e624e7cb11180545192806", "Gurgaon", 4);
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-                0, mLocationListener);
+        showLocation();
+    }
 
-
+    private void callWeatherApi(String locality) {
+        weatherViewModel.forcastResponse().observe(this, this::consumeResponse);
+        weatherViewModel.loadForcast(API_KEY, locality, 4);
     }
 
     private void consumeResponse(ApiResponse apiResponse) {
@@ -73,20 +81,15 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         switch (apiResponse.status) {
 
             case LOADING:
-                Toast.makeText(WeatherActivity.this, getResources().getString(R.string.loading), Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.VISIBLE);
                 break;
 
             case SUCCESS:
-                progressBar.setVisibility(View.GONE);
                 renderUI(apiResponse.data);
-                Toast.makeText(WeatherActivity.this, getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                 break;
 
             case ERROR:
-                progressBar.setVisibility(View.GONE);
-
-                Toast.makeText(WeatherActivity.this, getResources().getString(R.string.errorString), Toast.LENGTH_SHORT).show();
+                showViewsForFailure();
                 break;
 
             default:
@@ -94,10 +97,43 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    private void showViewsForFailure() {
+        progressBar.setVisibility(View.GONE);
+        tempErr.setVisibility(View.VISIBLE);
+        tempVal.setVisibility(View.GONE);
+        tempCity.setVisibility(View.GONE);
+        tempErrBtn.setOnClickListener(this);
+    }
+
+    private void showViewsForSuccess(WeatherResponse data) {
+
+        progressBar.clearAnimation();
+        progressBar.setVisibility(View.GONE);
+        tempVal.setVisibility(View.VISIBLE);
+        tempCity.setVisibility(View.VISIBLE);
+        tempVal.setText(String.format("%s%s", String.valueOf(Math.round(data.getCurrent().getTempC())), (char) 0x00B0));
+        tempCity.setText(data.getLocation().getName());
+    }
+
     private void renderUI(WeatherResponse data) {
         WeatherHelperClass weatherHelperClass = new WeatherHelperClass();
-        ((TextView) findViewById(R.id.temperature_val)).setText(String.valueOf(data.getCurrent().getTempC()));
-        ((TextView) findViewById(R.id.temperature_city)).setText(data.getLocation().getName());
+        showViewsForSuccess(data);
+        BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+                if (i != BottomSheetBehavior.STATE_EXPANDED) {
+                    mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+
+            }
+        });
+
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setAutoMeasureEnabled(true);
@@ -117,8 +153,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String cityName = addresses.get(0).getAddressLine(0);
-            Toast.makeText(WeatherActivity.this, cityName, Toast.LENGTH_SHORT).show();
+            mCachedCity = addresses.get(0).getLocality();
+            callWeatherApi(addresses.get(0).getLocality());
         }
 
         @Override
@@ -139,6 +175,70 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.temperature_retry:
+                callWeatherApi(mCachedCity);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_LOCATION) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Snackbar.make(mLayout, R.string.location_permission_granted,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                        0, mLocationListener);
+            } else {
+                Snackbar.make(mLayout, R.string.location_permission_denied,
+                        Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    private void requestLocationPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            Snackbar.make(mLayout, R.string.location_access_required,
+                    Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(WeatherActivity.this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},
+                            PERMISSION_REQUEST_LOCATION);
+                }
+            }).show();
+
+        } else {
+            Snackbar.make(mLayout, R.string.location_unavailable, Snackbar.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_LOCATION);
+        }
+    }
+
+    private void showLocation() {
+        if (!WeatherUtility.checkInternetConnection(this)) {
+            Snackbar.make(mLayout, R.string.no_network_connection, Snackbar.LENGTH_SHORT).show();
+        } else {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+                        0, mLocationListener);
+            } else {
+                requestLocationPermission();
+
+            }
+        }
 
     }
+
+
+
 }
