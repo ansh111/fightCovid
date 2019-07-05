@@ -1,6 +1,7 @@
 package com.gojek.weatherapp.ui;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,13 +24,14 @@ public class ForcastDisplayAdapter extends RecyclerView.Adapter<ForcastDisplayAd
     }
 
 
+    @NonNull
     @Override
-    public ApplicationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ApplicationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ApplicationViewHolder(parent.getContext(),parent);
     }
 
     @Override
-    public void onBindViewHolder(ApplicationViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ApplicationViewHolder holder, int position) {
         ModifiedWeatherResponse modifiedWeatherResponse = modifiedWeatherResponseList.get(position);
         holder.dataTwo.setText(modifiedWeatherResponse.getTemperature());
         holder.dataOne.setText(modifiedWeatherResponse.getDay());
@@ -50,10 +52,10 @@ public class ForcastDisplayAdapter extends RecyclerView.Adapter<ForcastDisplayAd
             this(LayoutInflater.from(context).inflate(R.layout.forcast_item, parent,false));
         }
 
-        private ApplicationViewHolder(View itemView) {
+        private ApplicationViewHolder(@NonNull View itemView) {
             super(itemView);
-            dataOne = (TextView) itemView.findViewById(R.id.data_one);
-            dataTwo = (TextView) itemView.findViewById(R.id.data_two);
+            dataOne = itemView.findViewById(R.id.data_one);
+            dataTwo = itemView.findViewById(R.id.data_two);
         }
     }
 }

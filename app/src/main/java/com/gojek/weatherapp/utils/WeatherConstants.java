@@ -3,6 +3,7 @@ package com.gojek.weatherapp.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class WeatherConstants {
     public static final int PERMISSION_REQUEST_LOCATION = 1 ;
     public static final String API_KEY = "69e792543e624e7cb11180545192806";
 
+    @NonNull
     public static Map<Integer, String> createDayMap() {
         Map<Integer, String> weekDays = new HashMap<>();
         weekDays.put(0, "Sunday");

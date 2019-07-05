@@ -1,0 +1,169 @@
+{
+  "location": {
+    "name": "Gurgaon",
+    "region": "Haryana",
+    "country": "India",
+    "lat": 28.47,
+    "lon": 77.03,
+    "tz_id": "Asia/Kolkata",
+    "localtime_epoch": 1562007946,
+    "localtime": "2019-07-02 0:35"
+  },
+  "current": {
+    "last_updated_epoch": 1562007613,
+    "last_updated": "2019-07-02 00:30",
+    "temp_c": 34.0,
+    "temp_f": 93.2,
+    "is_day": 0,
+    "condition": {
+      "text": "Mist",
+      "icon": "//cdn.apixu.com/weather/64x64/night/143.png",
+      "code": 1030
+    },
+    "wind_mph": 4.3,
+    "wind_kph": 6.8,
+    "wind_degree": 220,
+    "wind_dir": "SW",
+    "pressure_mb": 999.0,
+    "pressure_in": 30.0,
+    "precip_mm": 0.0,
+    "precip_in": 0.0,
+    "humidity": 39,
+    "cloud": 50,
+    "feelslike_c": 35.9,
+    "feelslike_f": 96.7,
+    "vis_km": 2.5,
+    "vis_miles": 1.0,
+    "uv": 0.0,
+    "gust_mph": 7.8,
+    "gust_kph": 12.6
+  },
+  "forecast": {
+    "forecastday": [
+      {
+        "date": "2019-07-02",
+        "date_epoch": 1562025600,
+        "day": {
+          "maxtemp_c": 49.2,
+          "maxtemp_f": 120.6,
+          "mintemp_c": 38.3,
+          "mintemp_f": 100.9,
+          "avgtemp_c": 43.6,
+          "avgtemp_f": 110.5,
+          "maxwind_mph": 12.3,
+          "maxwind_kph": 19.8,
+          "totalprecip_mm": 0.0,
+          "totalprecip_in": 0.0,
+          "avgvis_km": 10.0,
+          "avgvis_miles": 6.0,
+          "avghumidity": 17.0,
+          "condition": {
+            "text": "Partly cloudy",
+            "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+            "code": 1003
+          },
+          "uv": 11.3
+        },
+        "astro": {
+          "sunrise": "05:28 AM",
+          "sunset": "07:24 PM",
+          "moonrise": "04:48 AM",
+          "moonset": "07:02 PM"
+        }
+      },
+      {
+        "date": "2019-07-03",
+        "date_epoch": 1562112000,
+        "day": {
+          "maxtemp_c": 45.6,
+          "maxtemp_f": 114.1,
+          "mintemp_c": 36.8,
+          "mintemp_f": 98.2,
+          "avgtemp_c": 41.5,
+          "avgtemp_f": 106.7,
+          "maxwind_mph": 14.5,
+          "maxwind_kph": 23.4,
+          "totalprecip_mm": 0.0,
+          "totalprecip_in": 0.0,
+          "avgvis_km": 10.0,
+          "avgvis_miles": 6.0,
+          "avghumidity": 25.0,
+          "condition": {
+            "text": "Partly cloudy",
+            "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+            "code": 1003
+          },
+          "uv": 11.7
+        },
+        "astro": {
+          "sunrise": "05:29 AM",
+          "sunset": "07:24 PM",
+          "moonrise": "05:47 AM",
+          "moonset": "08:03 PM"
+        }
+      },
+      {
+        "date": "2019-07-04",
+        "date_epoch": 1562198400,
+        "day": {
+          "maxtemp_c": 47.6,
+          "maxtemp_f": 117.7,
+          "mintemp_c": 36.2,
+          "mintemp_f": 97.2,
+          "avgtemp_c": 42.2,
+          "avgtemp_f": 108.0,
+          "maxwind_mph": 12.3,
+          "maxwind_kph": 19.8,
+          "totalprecip_mm": 0.2,
+          "totalprecip_in": 0.01,
+          "avgvis_km": 10.0,
+          "avgvis_miles": 6.0,
+          "avghumidity": 28.0,
+          "condition": {
+            "text": "Patchy rain possible",
+            "icon": "//cdn.apixu.com/weather/64x64/day/176.png",
+            "code": 1063
+          },
+          "uv": 11.6
+        },
+        "astro": {
+          "sunrise": "05:29 AM",
+          "sunset": "07:24 PM",
+          "moonrise": "06:51 AM",
+          "moonset": "08:59 PM"
+        }
+      },
+      {
+        "date": "2019-07-05",
+        "date_epoch": 1562284800,
+        "day": {
+          "maxtemp_c": 43.4,
+          "maxtemp_f": 110.1,
+          "mintemp_c": 35.4,
+          "mintemp_f": 95.7,
+          "avgtemp_c": 39.4,
+          "avgtemp_f": 103.0,
+          "maxwind_mph": 17.0,
+          "maxwind_kph": 27.4,
+          "totalprecip_mm": 0.0,
+          "totalprecip_in": 0.0,
+          "avgvis_km": 10.0,
+          "avgvis_miles": 6.0,
+          "avghumidity": 31.0,
+          "condition": {
+            "text": "Partly cloudy",
+            "icon": "//cdn.apixu.com/weather/64x64/day/116.png",
+            "code": 1003
+          },
+          "uv": 11.9
+        },
+        "astro": {
+          "sunrise": "05:30 AM",
+          "sunset": "07:24 PM",
+          "moonrise": "07:58 AM",
+          "moonset": "09:50 PM"
+        }
+      }
+    ]
+  }
+}

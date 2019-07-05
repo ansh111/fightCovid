@@ -1,8 +1,11 @@
 package com.gojek.weatherapp.dagger;
 
 import android.arch.lifecycle.ViewModelProvider;
+import android.support.annotation.NonNull;
 
 import com.gojek.weatherapp.network.ApiCallInterface;
+import com.gojek.weatherapp.rx.AppSchedulerProvider;
+import com.gojek.weatherapp.rx.SchedulerProvider;
 import com.gojek.weatherapp.ui.Repository;
 import com.gojek.weatherapp.ui.ViewModelFactory;
 import com.gojek.weatherapp.utils.WeatherConstants;
@@ -25,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class UtilsModule {
 
+    @NonNull
     @Provides
     @Singleton
     Gson provideGson() {
@@ -33,9 +37,10 @@ public class UtilsModule {
         return builder.setLenient().create();
     }
 
+    @NonNull
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(@NonNull Gson gson, @NonNull OkHttpClient okHttpClient) {
 
         return new Retrofit.Builder()
                 .baseUrl(WeatherConstants.BASE_URL)
@@ -47,10 +52,11 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    ApiCallInterface getApiCallInterface(Retrofit retrofit) {
+    ApiCallInterface getApiCallInterface(@NonNull Retrofit retrofit) {
         return retrofit.create(ApiCallInterface.class);
     }
 
+    @NonNull
     @Provides
     @Singleton
     OkHttpClient getRequestHeader() {
@@ -70,15 +76,23 @@ public class UtilsModule {
         return httpClient.build();
     }
 
+    @NonNull
     @Provides
     @Singleton
     Repository getRepository(ApiCallInterface apiCallInterface) {
         return new Repository(apiCallInterface);
     }
 
+    @NonNull
     @Provides
     @Singleton
-    ViewModelProvider.Factory getViewModelFactory(Repository myRepository) {
-        return new ViewModelFactory(myRepository);
+    ViewModelProvider.Factory getViewModelFactory(Repository myRepository, SchedulerProvider schedulerProvider) {
+        return new ViewModelFactory(myRepository, schedulerProvider);
+    }
+
+    @NonNull
+    @Provides
+    SchedulerProvider provideSchedulerProvider() {
+        return new AppSchedulerProvider();
     }
 }

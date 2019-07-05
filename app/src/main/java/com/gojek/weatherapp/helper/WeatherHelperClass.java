@@ -1,5 +1,7 @@
 package com.gojek.weatherapp.helper;
 
+import android.support.annotation.NonNull;
+
 import com.gojek.weatherapp.model.Forecastday;
 import com.gojek.weatherapp.model.ModifiedWeatherResponse;
 import com.gojek.weatherapp.model.WeatherResponse;
@@ -12,7 +14,8 @@ import java.util.Map;
 import static com.gojek.weatherapp.utils.WeatherUtility.getDayFromDate;
 
 public class WeatherHelperClass {
-    public List<ModifiedWeatherResponse> processWeatherResponse(WeatherResponse weatherResponse) {
+    @NonNull
+    public List<ModifiedWeatherResponse> processWeatherResponse(@NonNull WeatherResponse weatherResponse) {
         List<ModifiedWeatherResponse> modifiedWeatherResponseList = new ArrayList<>();
         Map<Integer, String> weekDaysMap = WeatherConstants.createDayMap();
         for (Forecastday forecastday : weatherResponse.getForecast().getForecastday()) {

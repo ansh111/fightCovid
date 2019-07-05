@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -44,6 +45,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     ViewModelFactory viewModelFactory;
     WeatherViewModel weatherViewModel;
     private ProgressBar progressBar;
+    @Nullable
     private LocationManager mLocationManager;
     private TextView tempVal;
     private TextView tempCity;
@@ -127,7 +129,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         tempCity.setText(data.getLocation().getName());
     }
 
-    private void renderUI(WeatherResponse data) {
+    private void renderUI(@NonNull WeatherResponse data) {
         WeatherHelperClass weatherHelperClass = new WeatherHelperClass();
         showViewsForSuccess(data);
         BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet));
@@ -146,7 +148,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this){
             @Override
             public boolean canScrollVertically() {
@@ -195,7 +197,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
     };
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         switch (v.getId()) {
             case R.id.temperature_retry:
                 callWeatherApi(mCachedCity);

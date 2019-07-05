@@ -2,9 +2,12 @@ package com.gojek.weatherapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public class ModifiedWeatherResponse implements Parcelable {
 
+    @Nullable
     public String getTemperature() {
         return temperature;
     }
@@ -13,6 +16,7 @@ public class ModifiedWeatherResponse implements Parcelable {
         this.temperature = temperature;
     }
 
+    @Nullable
     public String getDay() {
         return day;
     }
@@ -21,7 +25,9 @@ public class ModifiedWeatherResponse implements Parcelable {
         this.day = day;
     }
 
+    @Nullable
     String temperature;
+    @Nullable
     String day;
 
     @Override
@@ -30,7 +36,7 @@ public class ModifiedWeatherResponse implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(this.temperature);
         dest.writeString(this.day);
     }
@@ -45,7 +51,7 @@ public class ModifiedWeatherResponse implements Parcelable {
 
     public static final Parcelable.Creator<ModifiedWeatherResponse> CREATOR = new Parcelable.Creator<ModifiedWeatherResponse>() {
         @Override
-        public ModifiedWeatherResponse createFromParcel(Parcel source) {
+        public ModifiedWeatherResponse createFromParcel(@NonNull Parcel source) {
             return new ModifiedWeatherResponse(source);
         }
 
