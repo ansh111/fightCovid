@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation.xml"
+    app:startDestination="@id/fightCovidFragment">
+
+    <fragment
+        android:id="@+id/fightCovidFragment"
+        android:name="com.fight.covid.ui.FightCovidFragment"
+        android:label="fragment_home_covid"
+        tools:layout="@layout/fragment_home_covid">
+       <!-- <argument
+            android:name="model"
+            android:defaultValue=""
+            app:argType="com.fight.covid.model.Response" />
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/fightCovidListFragment" />-->
+    </fragment>
+    <fragment
+        android:id="@+id/fightCovidListFragment"
+        android:name="com.fight.covid.ui.FightCovidListFragment"
+        android:label="FightCovidListFragment" />
+
+
+</navigation>
