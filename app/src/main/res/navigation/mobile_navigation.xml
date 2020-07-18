@@ -10,18 +10,25 @@
         android:name="com.fight.covid.ui.FightCovidFragment"
         android:label="fragment_home_covid"
         tools:layout="@layout/fragment_home_covid">
-       <!-- <argument
-            android:name="model"
-            android:defaultValue=""
-            app:argType="com.fight.covid.model.Response" />
-        <action
-            android:id="@+id/next_action"
-            app:destination="@id/fightCovidListFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/fightCovidListFragment"
         android:name="com.fight.covid.ui.FightCovidListFragment"
-        android:label="FightCovidListFragment" />
+        android:label="FightCovidListFragment" >
+
+        <action
+            android:id="@+id/action_fightCovidListFragment_to_fightCovidDetailFragment"
+            app:destination="@id/fightCovidDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fightCovidDetailFragment"
+        android:name="com.fight.covid.ui.FightCovidDetailFragment"
+        android:label="FightCovidDetailFragment" >
+        <argument
+            android:name="countryCode"
+            app:argType="string"
+            android:defaultValue="IN" />
+    </fragment>
 
 
 </navigation>

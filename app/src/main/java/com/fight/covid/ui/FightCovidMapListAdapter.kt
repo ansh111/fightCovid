@@ -16,7 +16,7 @@ import com.fight.covid.ui.FightCovidMapListAdapter.ApplicationViewHolder
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou
 
 class FightCovidMapListAdapter(private val fightCovidListFragment: FightCovidListFragment, private var mapList: List<ListViewModel>?) : RecyclerView.Adapter<ApplicationViewHolder>() {
-    private val mListener: FightCovidListener? = null
+    private val mListener: FightCovidListener? = fightCovidListFragment
     val fightCovidHelper = FightCovidHelper()
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ApplicationViewHolder {
         return ApplicationViewHolder(viewGroup.context, viewGroup)

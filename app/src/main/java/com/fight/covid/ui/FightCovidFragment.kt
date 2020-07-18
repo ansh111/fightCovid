@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import com.fight.covid.FightCovidApplication
 import com.fight.covid.R
 import com.fight.covid.databinding.FragmentHomeCovidBinding
-import com.fight.covid.model.ApiResponse
 import com.fight.covid.model.Response
-import com.fight.covid.utils.Status
 import javax.inject.Inject
 
 

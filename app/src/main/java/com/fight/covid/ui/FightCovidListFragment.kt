@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fight.covid.R
 import com.fight.covid.databinding.FightCovidListFragmentBinding
@@ -16,7 +19,7 @@ import com.fight.covid.model.ApiResponse
 import com.fight.covid.model.Response
 import com.fight.covid.utils.Status
 
-class FightCovidListFragment : Fragment() {
+class FightCovidListFragment : Fragment(),FightCovidMapListAdapter.FightCovidListener {
     private lateinit var adapter: FightCovidMapListAdapter
     private var mViewModel: FightCovidViewModel? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,17 +50,16 @@ class FightCovidListFragment : Fragment() {
     private fun renderUI(data: Response) {
         adapter.setData(data)
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-        // TODO: Use the ViewModel
-    }
+    
 
     companion object {
         fun newInstance(): FightCovidListFragment {
             return FightCovidListFragment()
         }
+    }
+
+    override fun onClick(countryCode: String?) {
+            val action = countryCode?.let { FightCovidListFragmentDirections.actionFightCovidListFragmentToFightCovidDetailFragment(it) }
+            action?.let { view?.let { it1 -> findNavController(it1).navigate(it) } }
     }
 }
