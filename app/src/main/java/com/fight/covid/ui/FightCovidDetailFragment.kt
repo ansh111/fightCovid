@@ -43,7 +43,6 @@ class FightCovidDetailFragment : Fragment() {
           val res =  apiResponse.data.countries.get(safeArgs.countryCode)
            binding.data = res
            binding.executePendingBindings()
-           Log.d("anshul",res.toString())
        }
     }
 
