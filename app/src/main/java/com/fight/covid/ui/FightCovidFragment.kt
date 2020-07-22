@@ -44,21 +44,9 @@ class FightCovidFragment : Fragment(){
     }
 
     private fun callWeatherApi() {
-     //   fightCovidViewModel!!.forcastResponse().observe(this, Observer { apiResponse: ApiResponse -> consumeResponse(apiResponse) })
         fightCovidViewModel!!.loadData()
     }
 
-    /*private fun consumeResponse(apiResponse: ApiResponse) {
-        when (apiResponse.status) {
-            Status.LOADING -> {
-            }
-            Status.SUCCESS -> renderUI(apiResponse.data!!)
-            Status.ERROR -> {
-            }
-            else -> {
-            }
-        }
-    }*/
 
 
     companion object {
