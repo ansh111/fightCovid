@@ -1,9 +1,17 @@
 package com.fight.covid.ui
 
+import android.app.Application
+import android.content.Context
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.fight.covid.FightCovidApplication
 import com.fight.covid.model.ApiResponse
 import com.fight.covid.model.Response
+import com.fight.covid.room.Countries
+import com.fight.covid.room.CountriesRoomDatabase
 import com.fight.covid.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -14,10 +22,6 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.mapLatest
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import kotlin.random.Random
 
 sealed class SearchResult
 class ValidResult(val result: MutableLiveData<ApiResponse>) : SearchResult()
@@ -28,7 +32,6 @@ object TerminalError : SearchResult()
 class FightCovidViewModel(private val repository: Repository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val responseLiveData = MutableLiveData<ApiResponse>()
-    
 
 
     @ExperimentalCoroutinesApi
@@ -49,7 +52,7 @@ class FightCovidViewModel(private val repository: Repository, private val schedu
             .mapLatest {
                 try {
                     if (it.length >= 2) {
-                        val searchResult = withContext( Dispatchers.IO) {
+                        val searchResult = withContext(Dispatchers.IO) {
                             performSearch(it)
                         }
                         println("Search result: ${searchResult.value} hits")
@@ -57,7 +60,7 @@ class FightCovidViewModel(private val repository: Repository, private val schedu
                         if (searchResult.value?.data?.countries?.isNotEmpty()!!) {
                             ValidResult(searchResult)
                         } else {
-                           EmptyResult
+                            EmptyResult
                         }
                     } else {
                         EmptyQuery
@@ -75,15 +78,15 @@ class FightCovidViewModel(private val repository: Repository, private val schedu
 
     private suspend fun performSearch(query: String): MutableLiveData<ApiResponse> {
         var filteredListData: MutableLiveData<ApiResponse>
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             filteredListData = responseLiveData
             val filteredList = filteredListData.value?.data?.countries
                     ?.filter { it.key.contains(query, true) }
                     ?.toMap()
             filteredListData.value?.data?.countries = filteredList
             filteredListData
-            }
         }
+    }
 
 
     fun loadData() {
@@ -99,21 +102,24 @@ class FightCovidViewModel(private val repository: Repository, private val schedu
     override fun onCleared() {
         disposables.clear()
     }
+
     @FlowPreview
     @ExperimentalCoroutinesApi
     val searchResult = internalSearchResult.asLiveData()
-
-
 
     fun searchData(it: String) {
         viewModelScope.launch {
             queryChannel.send(it)
         }
-
     }
 
-    fun resetData() {
 
+
+    /**
+     * Launching a new coroutine to insert the data in a non-blocking way
+     */
+    fun insert(countries: Countries) = viewModelScope.launch(Dispatchers.IO) {
+        repository.insert(countries)
     }
 
 }

@@ -55,7 +55,7 @@ class FightCovidListFragment : Fragment(),FightCovidMapListAdapter.FightCovidLis
     private fun initSearch(fightCovidListFragmentBinding: FightCovidListFragmentBinding) {
         fightCovidListFragmentBinding.searchView.apply {
             setOnQueryTextListener(
-                    activity?.let {
+                    activity?.let { it ->
                         DebouncingQueryTextListener(
                                 it
                         ) { newText ->

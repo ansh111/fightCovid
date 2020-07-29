@@ -37,6 +37,12 @@ public class Countries {
     @Expose
     private Integer deltaDeaths;
 
+
+
+    @SerializedName("timeseries")
+    @Expose
+    private Timeseries timeseries;
+
     public String getName() {
         return name;
     }
@@ -117,6 +123,14 @@ public class Countries {
         this.deltaDeaths = deltaDeaths;
     }
 
+    public Timeseries getTimeseries() {
+        return timeseries;
+    }
+
+    public void setTimeseries(Timeseries timeseries) {
+        this.timeseries = timeseries;
+    }
+
     @Override
     public String toString() {
         return "Countries{" +
@@ -130,6 +144,7 @@ public class Countries {
                 ", lng=" + lng +
                 ", deltaCases=" + deltaCases +
                 ", deltaDeaths=" + deltaDeaths +
+                ", timeseries=" + timeseries +
                 '}';
     }
 }

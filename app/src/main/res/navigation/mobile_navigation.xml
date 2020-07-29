@@ -28,6 +28,19 @@
             android:name="countryCode"
             app:argType="string"
             android:defaultValue="IN" />
+        <action
+            android:id="@+id/next_action"
+            app:destination="@id/fightCovidCasesTimelineFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fightCovidCasesTimelineFragment"
+        android:name="com.fight.covid.ui.FightCovidCasesTimelineFragment"
+        android:label="fragment_fight_covid_cases_timeline"
+        tools:layout="@layout/fragment_fight_covid_cases_timeline" >
+        <argument
+            android:name="countryCode"
+            app:argType="string"
+            android:defaultValue="IN" />
     </fragment>
 
 

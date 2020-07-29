@@ -1,8 +1,11 @@
 package com.fight.covid.ui;
 
+import android.app.Application;
+
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.fight.covid.FightCovidApplication;
 import com.fight.covid.rx.SchedulerProvider;
 
 import javax.inject.Inject;

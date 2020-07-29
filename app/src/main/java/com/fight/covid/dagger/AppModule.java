@@ -2,6 +2,12 @@ package com.fight.covid.dagger;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
+import com.fight.covid.FightCovidApplication;
+import com.fight.covid.room.CountriesDao;
+import com.fight.covid.room.CountriesRoomDatabase;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,5 +25,11 @@ public class AppModule {
     @Singleton
     Context provideContext() {
         return context;
+    }
+
+    @NonNull
+    @Provides
+    CountriesDao getCountriesDao(){
+        return  CountriesRoomDatabase.Companion.getDatabase(context).countriesDao();
     }
 }

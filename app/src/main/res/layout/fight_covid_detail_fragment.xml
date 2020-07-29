@@ -51,14 +51,32 @@
         android:textSize="20sp"
         android:padding="10dp"
         android:text="@{`Recoveries : ` + Integer.toString(data.recovered)}" />
+    <TextView
+        android:id="@+id/reported"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recovered"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:text="@{`Cases Reported : ` + Integer.toString(data.reports)}" />
+    <Button
+        android:id="@+id/timeline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/reported"
+       app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/see_covid_timeline"
+        ></Button>
     <com.anychart.AnyChartView
         android:id="@+id/any_chart_view"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/recovered"
+        app:layout_constraintTop_toBottomOf="@id/timeline"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:makeChart="@{data}"
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

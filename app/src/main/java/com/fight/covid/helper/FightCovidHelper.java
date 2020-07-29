@@ -20,6 +20,8 @@ public class FightCovidHelper {
            listViewModel.setCountryName(arg.getValue().getName());
            mapList.add(listViewModel);
 
+
+
         }
         return mapList;
     }

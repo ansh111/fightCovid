@@ -10,12 +10,10 @@ import com.fight.covid.dagger.UtilsModule;
 
 public class FightCovidApplication extends Application {
     AppComponent appComponent;
-    Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).utilsModule(new UtilsModule()).build();
     }
     public AppComponent getAppComponent() {

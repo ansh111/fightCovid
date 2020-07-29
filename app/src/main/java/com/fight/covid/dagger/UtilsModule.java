@@ -3,7 +3,10 @@ package com.fight.covid.dagger;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
+import com.fight.covid.FightCovidApplication;
 import com.fight.covid.network.ApiCallInterface;
+import com.fight.covid.room.CountriesDao;
+import com.fight.covid.room.CountriesRoomDatabase;
 import com.fight.covid.rx.AppSchedulerProvider;
 import com.fight.covid.rx.SchedulerProvider;
 import com.fight.covid.ui.Repository;
@@ -56,6 +59,8 @@ public class UtilsModule {
         return retrofit.create(ApiCallInterface.class);
     }
 
+
+
     @NonNull
     @Provides
     @Singleton
@@ -79,8 +84,9 @@ public class UtilsModule {
     @NonNull
     @Provides
     @Singleton
-    Repository getRepository(ApiCallInterface apiCallInterface) {
-        return new Repository(apiCallInterface);
+    Repository getRepository(ApiCallInterface apiCallInterface, CountriesDao countriesDao) {
+
+        return new Repository(apiCallInterface,countriesDao);
     }
 
     @NonNull
@@ -95,4 +101,6 @@ public class UtilsModule {
     SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
     }
+
+
 }
