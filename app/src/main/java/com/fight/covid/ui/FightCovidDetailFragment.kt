@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.fight.covid.R
 import com.fight.covid.databinding.FightCovidDetailFragmentBinding
 import com.fight.covid.model.ApiResponse
+import com.fight.covid.model.Countries
 import com.fight.covid.utils.Status
 
 class FightCovidDetailFragment : Fragment() {
@@ -35,13 +36,14 @@ class FightCovidDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders.of(requireActivity()).get(FightCovidViewModel::class.java)
-        viewModel!!.forcastResponse().observe(this, Observer { apiResponse: ApiResponse -> onResponse(apiResponse) })
-
+        val res=  viewModel.getCountryByCode(safeArgs.countryCode)
+        binding.data = res
+        binding.executePendingBindings()
         binding.timeline.setOnClickListener{
             openCasesTimelinePage()
 
         }
-        // TODO: Use the ViewModel
+
     }
 
     private fun openCasesTimelinePage() {
@@ -50,13 +52,5 @@ class FightCovidDetailFragment : Fragment() {
 
     }
 
-    private fun onResponse(apiResponse: ApiResponse) {
-
-       if(apiResponse.data !=null){
-          val res =  apiResponse.data.countries.get(safeArgs.countryCode)
-           binding.data = res
-           binding.executePendingBindings()
-       }
-    }
 
 }

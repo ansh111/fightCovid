@@ -1,5 +1,6 @@
 package com.fight.covid.ui
 
+import androidx.lifecycle.LiveData
 import com.fight.covid.FightCovidApplication
 import com.fight.covid.model.Response
 import com.fight.covid.network.ApiCallInterface
@@ -23,5 +24,10 @@ var countryDao: CountriesDao?) {
     suspend fun insert(country: Countries){
         countryDao?.insert(country)
     }
+
+   suspend fun getCountryByCode(countryCode:String):Countries?{
+        return countryDao?.getCountryByCode(countryCode)
+    }
+
 
 }

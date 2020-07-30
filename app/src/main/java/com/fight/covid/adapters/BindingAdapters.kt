@@ -12,8 +12,8 @@ import com.anychart.data.Mapping
 import com.anychart.enums.*
 import com.anychart.data.Set;
 import com.anychart.graphics.vector.Stroke
-import com.fight.covid.model.Countries
 import com.fight.covid.model.Timeseries
+import com.fight.covid.room.Countries
 
 
 @BindingAdapter("makeChart")

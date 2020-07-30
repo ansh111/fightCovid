@@ -3,7 +3,7 @@
     <data>
         <variable
             name="data"
-            type="com.fight.covid.model.Countries" />
+            type="com.fight.covid.room.Countries" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

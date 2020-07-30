@@ -113,6 +113,10 @@ class FightCovidViewModel(private val repository: Repository, private val schedu
         }
     }
 
+    fun getCountryByCode(countryCode:String):Countries?= runBlocking(Dispatchers.Default){
+        repository.getCountryByCode(countryCode = countryCode)
+    }
+
 
 
     /**

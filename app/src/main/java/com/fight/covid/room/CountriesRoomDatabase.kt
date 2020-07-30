@@ -18,10 +18,6 @@ public abstract class CountriesRoomDatabase : RoomDatabase(){
             INSTANCE?.let { database-> scope.launch {
                 var countryDao = database.countriesDao()
                 countryDao.deleteAll()
-
-                var country = Countries("","","",1,1,1,1)
-                countryDao.insert(country)
-
             }}
         }
     }
