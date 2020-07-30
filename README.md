@@ -1,15 +1,10 @@
-# WeatherApp
+# FightCovid
 
-WeatherApp is an application that displays the forcast of current location and for the next 4 days.
-
-## Installation
-
-Install the application by either using termianl or importing the source code in android studio and then running it.Also generate the API_KEY as it is different for different user .Mine is
-69e792543e624e7cb11180545192806
+A sample app to just demonstrate the basic details of Covid-19 till we overcome this pandemic
 
 
 ```bash
-adb install WeatherApp(apk file full path)
+adb install FightCovid(apk file full path)
 ```
 
 ## Usage
@@ -26,7 +21,9 @@ LiveData
 ViewModel
 Rx
 Mockito
+Room
+Navigation
 
 
 ## License
-GO-Jek
+Anshul
