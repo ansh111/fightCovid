@@ -19,9 +19,10 @@ import com.fight.covid.model.Response
 import com.fight.covid.room.Countries
 import com.fight.covid.utils.Status
 import com.jakewharton.retrofit2.adapter.rxjava2.Result.response
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class FightCovidFragment : Fragment(){
     @JvmField
     @Inject
@@ -35,7 +36,6 @@ class FightCovidFragment : Fragment(){
     private lateinit var responseData:Response
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        (activity?.application as FightCovidApplication).appComponent.doInjection(this)
        fightCovidViewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(FightCovidViewModel::class.java)
         binding  = FragmentHomeCovidBinding.inflate(inflater,container,false)
         return binding.root

@@ -13,6 +13,7 @@ import com.fight.covid.model.Response
 import com.fight.covid.room.Countries
 import com.fight.covid.room.CountriesRoomDatabase
 import com.fight.covid.rx.SchedulerProvider
+import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.*
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.mapLatest
+import javax.inject.Inject
 
 sealed class SearchResult
 class ValidResult(val result: MutableLiveData<ApiResponse>) : SearchResult()
@@ -29,7 +31,8 @@ object EmptyResult : SearchResult()
 object EmptyQuery : SearchResult()
 class ErrorResult(val e: Throwable) : SearchResult()
 object TerminalError : SearchResult()
-class FightCovidViewModel(private val repository: Repository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
+@ActivityScoped
+class FightCovidViewModel @Inject constructor(private val repository: Repository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val responseLiveData = MutableLiveData<ApiResponse>()
 

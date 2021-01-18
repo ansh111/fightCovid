@@ -32,9 +32,8 @@ class FightCovidDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(FightCovidViewModel::class.java)
         val res=  viewModel.getCountryByCode(safeArgs.countryCode)
         binding.data = res
@@ -43,7 +42,6 @@ class FightCovidDetailFragment : Fragment() {
             openCasesTimelinePage()
 
         }
-
     }
 
     private fun openCasesTimelinePage() {
